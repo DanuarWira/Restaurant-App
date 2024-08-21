@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/model/restaurant.dart';
+import 'package:restaurant_app/view/DetailScreen/detail_screen.dart';
 
 class homeScreen extends StatelessWidget {
   static const routeName = '/home';
@@ -38,17 +39,19 @@ class homeScreen extends StatelessWidget {
         width: 100,
       ),
       title: Text(restaurant.name),
-      subtitle: Text(restaurant.city),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(restaurant.city),
+          Text(restaurant.rating.toString())
+        ],
+      ),
+      onTap: () {
+        Navigator.pushNamed(context, detailScreen.routeName,
+          arguments: restaurant);
+      },
     );
   }
 }
 
-List<Restaurant> parseRestaurant(String? json) {
-  if (json == null) {
-    return [];
-  }
 
-  // Correctly parse the JSON, assuming a list of restaurants
-  final List<dynamic> jsonData = jsonDecode(json)['restaurants']; // Access the 'restaurants' list
-  return jsonData.map((restaurantJson) => Restaurant.fromJson(restaurantJson as Map<String, dynamic>)).toList();
-}

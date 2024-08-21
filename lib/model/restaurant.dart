@@ -107,3 +107,13 @@ class Drink {
     "name": name,
   };
 }
+
+List<Restaurant> parseRestaurant(String? json) {
+  if (json == null) {
+    return [];
+  }
+
+  // Correctly parse the JSON, assuming a list of restaurants
+  final List<dynamic> jsonData = jsonDecode(json)['restaurants']; // Access the 'restaurants' list
+  return jsonData.map((restaurantJson) => Restaurant.fromJson(restaurantJson as Map<String, dynamic>)).toList();
+}

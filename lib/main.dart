@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/view/DetailScreen/detail_screen.dart';
 import 'package:restaurant_app/view/HomeScreen/home_screen.dart';
+
+import 'model/restaurant.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Restaurant App',
       theme: ThemeData(
         primaryColor: Colors.greenAccent,
@@ -19,7 +23,10 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: homeScreen.routeName,
       routes: {
-        homeScreen.routeName: (context) => const homeScreen()
+        homeScreen.routeName: (context) => const homeScreen(),
+        detailScreen.routeName: (context) => detailScreen(
+          restaurant: ModalRoute.of(context)?.settings.arguments as Restaurant,
+        )
       },
     );
   }
